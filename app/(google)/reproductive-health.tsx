@@ -2,12 +2,12 @@ import { end, start } from '@/constants/time'
 import React, { useEffect, useState } from 'react'
 import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native'
 import {
-    CervicalMucusAppearance,
-    CervicalMucusSensation,
-    insertRecords,
-    MenstruationFlow,
-    OvulationTestResult,
-    readRecords
+  CervicalMucusAppearance,
+  CervicalMucusSensation,
+  insertRecords,
+  MenstruationFlow,
+  OvulationTestResult,
+  readRecords
 } from 'react-native-health-connect'
 
 const ReproductiveHealth = () => {
@@ -31,10 +31,10 @@ const ReproductiveHealth = () => {
           ? MenstruationFlow.LIGHT 
           : MenstruationFlow.MEDIUM
       }])
-      console.log('Added menstrual flow', result)
+      // console.log('Added menstrual flow', result)
      await getMenstrualFlowData()
     } catch (e) {
-      console.log('Error adding flow', e)
+      // console.log('Error adding flow', e)
     }
   }
 
@@ -46,10 +46,10 @@ const ReproductiveHealth = () => {
         appearance: appearance === 'dry' ? CervicalMucusAppearance.DRY : CervicalMucusAppearance.CREAMY,
         sensation: sensation === 'heavy' ? CervicalMucusSensation.HEAVY : CervicalMucusSensation.LIGHT
       }])
-      console.log('Added cervical mucus', result)
+      // console.log('Added cervical mucus', result)
     await  getCervicalMucusData()
     } catch (e) {
-      console.log('Error adding mucus', e)
+      // console.log('Error adding mucus', e)
     }
   }
 
@@ -60,10 +60,10 @@ const ReproductiveHealth = () => {
         time: new Date().toISOString(),
         result: ovulation === 'positive' ? OvulationTestResult.POSITIVE : OvulationTestResult.NEGATIVE
       }])
-      console.log('Added ovulation test', result)
+      // console.log('Added ovulation test', result)
      await getOvulationTestData()
     } catch (e) {
-      console.log('Error adding ovulation', e)
+      // console.log('Error adding ovulation', e)
     }
   }
 
@@ -75,7 +75,7 @@ const ReproductiveHealth = () => {
       })
       setFlowData(records)
     } catch (e) {
-      console.log('Error fetching flow', e)
+      // console.log('Error fetching flow', e)
     }
   }
 
@@ -86,7 +86,7 @@ const ReproductiveHealth = () => {
       })
       setCervicalData(records)
     } catch (e) {
-      console.log('Error fetching mucus', e)
+      // console.log('Error fetching mucus', e)
     }
   }
 
@@ -97,7 +97,7 @@ const ReproductiveHealth = () => {
       })
       setOvulationData(records)
     } catch (e) {
-      console.log('Error fetching ovulation', e)
+      // console.log('Error fetching ovulation', e)
     }
   }
 

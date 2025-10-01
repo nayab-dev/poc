@@ -35,17 +35,17 @@ const Steps = () => {
           operator: 'between',
         },
       })
-      console.log(records)
+      // console.log(records)
       setSteps(records)
     } catch (error) {
-      console.log('Error getting step', error)
+      // console.log('Error getting step', error)
     }
   }
 
   const addSteps = async () => {
   try {
     const end = new Date(selectedDate)
-    const start = new Date(end.getTime() - 30 * 60 * 1000) 
+    const start = new Date(end.getTime() - 2 * 60 * 1000) 
 
     await insertRecords([
       {
@@ -59,7 +59,7 @@ const Steps = () => {
     setValue('')
     getSteps()
   } catch (error) {
-    console.log('Error inserting step', error)
+    // console.log('Error inserting step', error)
   }
 }
 
@@ -133,6 +133,7 @@ export default Steps
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+    flex:1
   },
   heading: {
     fontSize: 18,

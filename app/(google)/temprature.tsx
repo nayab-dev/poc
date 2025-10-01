@@ -24,7 +24,7 @@ const Temperature = () => {
       setTemperature('');
       getTemperatureData();
     } catch (error) {
-      console.log("Error while adding temperature data", error);
+      // console.log("Error while adding temperature data", error);
     }
   };
 
@@ -33,10 +33,10 @@ const Temperature = () => {
       const { records } = await readRecords("BodyTemperature", {
         timeRangeFilter: { startTime: start, endTime: end, operator: "between" }
       });
-      console.log(records)
+      // console.log(records)
       setTemperatureData(records);
     } catch (error) {
-      console.log("Error fetching temperature data", error);
+      // console.log("Error fetching temperature data", error);
     }
   };
 

@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { insertRecords, readRecords } from 'react-native-health-connect'
-
+type resultType = {
+  metadata: { id: string }
+  time: string
+  height: { inMeters: number }
+}
 const Height = () => {
-  const [height, setHeight] = useState()
+  const [height, setHeight] = useState<resultType>()
   const [inputHeight, setInputHeight] = useState('')
 
   const addHeight = async () => {
@@ -16,14 +20,14 @@ const Height = () => {
       await insertRecords([
         {
           recordType: 'Height',
-          time: startTime,
+          time: now.toISOString(),
           height: { unit: 'meters', value: Number(inputHeight) }
         }
       ])
       setInputHeight('')
       await getHeight()
     } catch (error) {
-      console.log('Error while adding height', error)
+      // console.log('Error while adding height', error)
     }
   }
 
@@ -37,12 +41,12 @@ const Height = () => {
       const { records } = await readRecords('Height', {
         timeRangeFilter: { operator: 'between', startTime: start, endTime: end }
       })
-
+    
       if (records.length > 0) {
-        setHeight(records[records.length - 1])
+        setHeight(records[records.length - 1] as resultType) // get the latest record
       }
     } catch (error) {
-      console.log('Error while fetching height', error)
+      // console.log('Error while fetching height', error)
     }
   }
 

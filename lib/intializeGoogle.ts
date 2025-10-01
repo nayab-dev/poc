@@ -8,5 +8,5 @@ export const initGoogleHealth=async()=>{
      console.log("Health Connect not available on this device");
     return;
   }  const grantedPermissions =  await requestPermission(allPermissions);
-  console.log("Granted permissions: ", grantedPermissions);
+  // console.log("Granted permissions: ", grantedPermissions);
 }

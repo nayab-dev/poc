@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Button, FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 import { insertRecords, readRecords } from "react-native-health-connect";
-
+type resultType = {
+  energy: { inCalories: number } | null;
+  startTime: string;
+  endTime: string;
+  metadata: { id: string };
+};
 const Calories = () => {
-  const [calories, setCalories] = useState([]);
+  const [calories, setCalories] = useState<resultType[]>([]);
   const [energy, setEnergy] = useState("");
 
   const addCalories = async () => {
     if (!energy) return;
     try {
       const now = new Date();
-      const startTime = new Date(now.getTime() - 1000 * 60 * 30).toISOString(); // 30 min ago
+      const startTime = new Date(now.getTime() - 1000 * 60 * 5).toISOString(); // 30 min ago
       const endTime = now.toISOString();
 
       await insertRecords([
@@ -25,7 +30,7 @@ const Calories = () => {
       setEnergy("");
       await getCalories();
     } catch (error) {
-      console.log("Error adding calories:", error);
+      // console.log("Error adding calories:", error);
     }
   };
 
@@ -40,9 +45,9 @@ const Calories = () => {
         timeRangeFilter: { operator: "between", startTime: start, endTime: end },
       });
 
-      setCalories(records);
+      setCalories(records as resultType[]);
     } catch (error) {
-      console.log("Error fetching calories:", error);
+      // console.log("Error fetching calories:", error);
     }
   };
 
@@ -68,7 +73,7 @@ const Calories = () => {
         keyExtractor={(item) => item.metadata.id}
         renderItem={({ item }) => (
           <View style={styles.item}>
-            <Text>Calories: {item.energy.inCalories} Calories</Text>
+            <Text>Calories: {item?.energy?.inCalories} Calories</Text>
             <Text>Start: {new Date(item.startTime).toLocaleString()}</Text>
             <Text>End: {new Date(item.endTime).toLocaleString()}</Text>
           </View>

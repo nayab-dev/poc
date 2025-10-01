@@ -2,9 +2,14 @@ import { end, start } from '@/constants/time'
 import React, { useEffect, useState } from 'react'
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native'
 import { insertRecords, readRecords, SleepStageType } from 'react-native-health-connect'
-
+type resultType = { 
+  startTime: string;
+  endTime: string;
+  stages: { stage: string; startTime: string; endTime: string }[];
+  metadata: { id: string };
+}
 const Sleep = () => {
-  const [sleepData, setSleepData] = useState([])
+  const [sleepData, setSleepData] = useState<resultType[]>([])
 
   const getSleepData = async () => {
     try {
@@ -15,9 +20,9 @@ const Sleep = () => {
           operator: "between"
         }
       })
-      setSleepData(records)
+      setSleepData(records as resultType[])
     } catch (error) {
-      console.log("Error while getting sleep data", error)
+      // console.log("Error while getting sleep data", error)
     }
   }
 
@@ -37,7 +42,7 @@ const Sleep = () => {
       }])
       await getSleepData()
     } catch (error) {
-      console.log("Error while adding sleep data", error)
+      // console.log("Error while adding sleep data", error)
     }
   }
 

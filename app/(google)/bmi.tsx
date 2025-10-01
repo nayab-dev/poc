@@ -17,7 +17,7 @@ const BMI = () => {
       })
       setHeight(records[records.length - 1])
     } catch (error) {
-      console.log('Error fetching height', error)
+      // console.log('Error fetching height', error)
     }
   }
 
@@ -32,7 +32,7 @@ const BMI = () => {
       })
       setWeight(records[records.length - 1])
     } catch (error) {
-      console.log('Error fetching weight', error)
+      // console.log('Error fetching weight', error)
     }
   }
 

@@ -21,14 +21,22 @@ const healthRoutes = [
   { href: "/weight", name: "Weight" },
 ]
 
-
+const routes=[
+    { href: "/distance", name: "Distance" },
+  { href: "/heart-rate", name: "Heart Rate" },
+  { href: "/height", name: "Height" },
+  { href: "/hydration", name: "Hydration" },
+   { href: "/weight", name: "Weight" },
+    { href: "/sleep", name: "Sleep" },
+  { href: "/steps", name: "Steps" },
+]
 
 const GoogleFit = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
          <Text style={styles.header}>Google Health</Text>
    {
-     healthRoutes.map((item,idx)=>(
+     routes.map((item,idx)=>(
    
          <TouchableOpacity
            style={styles.card}

@@ -2,8 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { insertRecords, readRecords } from 'react-native-health-connect'
 
+type resultType = {
+  metadata: { id: string }
+  time: string
+  weight: { inKilograms: number }
+}
 const Weight = () => {
-  const [weight, setWeight] = useState()
+  const [weight, setWeight] = useState<resultType>()
   const [inputWeight, setInputWeight] = useState('')
 
   const addWeight = async () => {
@@ -16,16 +21,16 @@ const Weight = () => {
       const result=await insertRecords([
         {
           recordType: 'Weight',
-          time: startTime,
+          time: now.toISOString(),
           weight: { unit: 'kilograms', value: Number(inputWeight) }
         }
       ])
-      console.log("added",result);
+      // console.log("added",result);
       
       setInputWeight('')
       await getWeight()
     } catch (error) {
-      console.log('Error while adding weight', error)
+      // console.log('Error while adding weight', error)
     }
   }
 
@@ -42,10 +47,10 @@ const Weight = () => {
 
 
       if (records.length > 0) {
-        setWeight(records[records.length-1])
+        setWeight(records[records.length-1] as resultType)
       }
     } catch (error) {
-      console.log('Error while fetching weight', error)
+      // console.log('Error while fetching weight', error)
     }
   }
 

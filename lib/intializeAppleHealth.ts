@@ -20,7 +20,7 @@ async function loadAppleHealth(){
    if (Platform.OS === "ios") {
     const module = await import("react-native-health");
     AppleHealthKit = module.default;
-    console.log("AppleHealthKit loaded:", AppleHealthKit);
+    // console.log("AppleHealthKit loaded:", AppleHealthKit);
   }
 }
 

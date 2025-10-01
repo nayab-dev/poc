@@ -3,9 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import { insertRecords, readRecords } from 'react-native-health-connect';
 
+type resultType = {
+  metadata: { id: string };
+  samples: { beatsPerMinute: number; time: string }[];
+};
 const HeartRate = () => {
   const [bpm, setBPM] = useState('');
-  const [bpmData, setBPMData] = useState([]);
+  const [bpmData, setBPMData] = useState<resultType[]>([]);
 
   const addHeartRate = async () => {
     try {
@@ -16,13 +20,13 @@ const HeartRate = () => {
         recordType: "HeartRate",
         startTime: startTime,
         endTime: endTime,
-        samples: [{ beatsPerMinute: Number(bpm), time: end }]
+        samples: [{ beatsPerMinute: Number(bpm), time: endTime }]
       }]);
-      console.log("added ",result)
+      // console.log("added ",result)
       setBPM('');
       getBPMData(); // refresh list after adding
     } catch (error) {
-      console.log("Error while adding heart rate", error);
+      // console.log("Error while adding heart rate", error);
     }
   };
 
@@ -32,10 +36,10 @@ const HeartRate = () => {
       const { records } = await readRecords("HeartRate", {
         timeRangeFilter: { startTime: start, endTime: end, operator: 'between' }
       });
-      console.log(records)
-      setBPMData(records);
+      // console.log(records)
+      setBPMData(records as resultType[]);
     } catch (error) {
-      console.log("Error while getting heart rate", error);
+      // console.log("Error while getting heart rate", error);
     }
   };
 

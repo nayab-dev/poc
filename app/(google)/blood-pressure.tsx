@@ -8,13 +8,21 @@ import {
   insertRecords,
   readRecords,
 } from 'react-native-health-connect';
+type resultType = {
+  systolic: { value: number; unit: string };
+  diastolic: { value: number; unit: string };
+  bodyPosition: number;
+  measurementLocation: number;
+  time: string;
+  metadata: { id: string };
+};
 
 const BloodPressure = () => {
   const [systolic, setSystolic] = useState('');
   const [diastolic, setDiastolic] = useState('');
   const [bodyPosition, setBodyPosition] = useState('');
   const [armPosition, setArmPosition] = useState('');
-  const [records, setRecords] = useState([]);
+  const [records, setRecords] = useState<resultType[]>([]);
 
   const BodyPositions = Object.keys(BloodPressureBodyPosition);
   const ArmPositions = Object.keys(BloodPressureMeasurementLocation);
@@ -25,9 +33,9 @@ const BloodPressure = () => {
       const { records } = await readRecords('BloodPressure', {
         timeRangeFilter: { operator: 'between', startTime: start, endTime: end },
       });
-      setRecords(records);
+      setRecords(records as resultType[]);
     } catch (err) {
-      console.log('Error fetching blood pressure:', err);
+      // console.log('Error fetching blood pressure:', err);
     }
   };
 
@@ -35,7 +43,7 @@ const BloodPressure = () => {
   const addBloodPressure = async () => {
     if (!systolic || !diastolic || bodyPosition === '' || armPosition === '') return;
 
-    const newRecord = {
+    const newRecord : any= {
       recordType: 'BloodPressure',
       bodyPosition: Number(bodyPosition),
       measurementLocation: Number(armPosition),
@@ -43,7 +51,7 @@ const BloodPressure = () => {
       diastolic: { value: Number(diastolic), unit: 'millimetersOfMercury' },
       time: new Date().toISOString(),
       metadata: { id: Date.now().toString() }, // temporary id for UI
-    };
+    } ;
 
     // Optimistic UI update
     setRecords([newRecord, ...records]);
@@ -53,7 +61,7 @@ const BloodPressure = () => {
       // Give Health Connect a moment to sync
       (getBloodPressure());
     } catch (err) {
-      console.log('Error adding blood pressure:', err);
+      // console.log('Error adding blood pressure:', err);
     }
 
     // Reset form

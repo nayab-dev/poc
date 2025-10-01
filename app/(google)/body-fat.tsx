@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { insertRecords, readRecords } from 'react-native-health-connect'
-
+type resultType = {
+  percentage: number
+  time: string
+  metadata: { id: string }
+}
 const BodyFat = () => {
-  const [bodyFat, setBodyFat] = useState()
+  const [bodyFat, setBodyFat] = useState<resultType>()
   const [inputBodyFat, setInputBodyFat] = useState('')
 
   const addBodyFat = async () => {
@@ -23,7 +27,7 @@ const BodyFat = () => {
       setInputBodyFat('')
       await getBodyFat()
     } catch (error) {
-      console.log('Error while adding body fat', error)
+      // console.log('Error while adding body fat', error)
     }
   }
 
@@ -39,10 +43,10 @@ const BodyFat = () => {
       })
 
       if (records.length > 0) {
-        setBodyFat(records[records.length - 1])
+        setBodyFat(records[records.length - 1] as resultType)
       }
     } catch (error) {
-      console.log('Error while fetching body fat', error)
+      // console.log('Error while fetching body fat', error)
     }
   }
 

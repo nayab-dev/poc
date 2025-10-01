@@ -2,10 +2,14 @@ import { end, start } from '@/constants/time';
 import React, { useEffect, useState } from 'react';
 import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import { insertRecords, readRecords } from 'react-native-health-connect';
-
+type resultType = { 
+  percentage: number | null;
+  time: string;
+  metadata: { id: string };
+}
 const OxygenSaturation = () => {
   const [percentage, setPercentage] = useState('');
-  const [oxygenData, setOxygenData] = useState([]);
+  const [oxygenData, setOxygenData] = useState<resultType[]>([]);
 
   const addOxygenSaturationRecord = async () => {
     try {
@@ -23,7 +27,7 @@ const OxygenSaturation = () => {
       setPercentage('');
       getOxygenSaturation();
     } catch (error) {
-      console.log("Error while adding oxygen data", error);
+      // console.log("Error while adding oxygen data", error);
     }
   };
 
@@ -32,9 +36,9 @@ const OxygenSaturation = () => {
       const { records } = await readRecords("OxygenSaturation", {
         timeRangeFilter: { startTime: start, endTime: end, operator: "between" }
       });
-      setOxygenData(records);
+      setOxygenData(records as resultType[]);
     } catch (error) {
-      console.log("Error fetching oxygen data", error);
+      // console.log("Error fetching oxygen data", error);
     }
   };
 
@@ -62,7 +66,7 @@ const OxygenSaturation = () => {
         style={styles.list}
         renderItem={({ item }) => (
           <View style={styles.item}>
-            <Text>Percentage: {item.percentage}%</Text>
+            <Text>Percentage: {item?.percentage}%</Text>
             <Text>Time: {new Date(item.time).toLocaleString()}</Text>
           </View>
         )}

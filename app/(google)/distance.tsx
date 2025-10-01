@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native'
-import { insertRecords, readRecords, } from 'react-native-health-connect'
+import { insertRecords, readRecords } from 'react-native-health-connect'
+type resultType = {
+  metadata: { id: string }
+  startTime: string
+  endTime: string
+  distance: { inMiles: number }
+}
 
 const Distance = () => {
-  const [distance, setDistance] = useState([])
+  const [distance, setDistance] = useState<resultType[]>([])
   const [value, setValue] = useState('')
   const [duration,setDuration]=useState(0)
 
@@ -11,7 +17,7 @@ const Distance = () => {
     if (!value) return
     try {
       const now = new Date()
-      const startTime = new Date(now.getTime() - 1000 * 60 * 30).toISOString() 
+      const startTime = new Date(now.getTime() - 1000 * 60 * 5).toISOString() 
       const endTime = now.toISOString()
 
       await insertRecords([
@@ -26,7 +32,7 @@ const Distance = () => {
       setValue('')
       await getDistance()
     } catch (error) {
-      console.log('Error adding distance:', error)
+      // console.log('Error adding distance:', error)
     }
   }
 
@@ -39,8 +45,8 @@ const Distance = () => {
 
       const { records } = await readRecords('Distance', {
         timeRangeFilter: { operator: 'between', startTime: start, endTime: end }
-      })
-      let totalDurationInHrs=0;
+      }) as { records: resultType[] }
+      let totalDurationInHrs=0.000;
       records.forEach((item)=>{
         const startTime=new Date(item.startTime)
         const endTime=new Date(item.endTime)
@@ -49,11 +55,11 @@ const Distance = () => {
         // console.log(durationHrs)
         totalDurationInHrs+=durationHrs
       })
-      setDuration((totalDurationInHrs.toFixed(2)))
-
+      setDuration(Number(totalDurationInHrs.toFixed(2)))
+      // console.log('Fetched distance records:', records)
       setDistance(records)
     } catch (error) {
-      console.log('Error fetching distance:', error)
+      // console.log('Error fetching distance:', error)
     }
   }
 
@@ -64,7 +70,7 @@ const Distance = () => {
   const getSum=()=>{
     if(distance.length>0){
       const result=distance.reduce((acc,curr)=>acc+curr.distance.inMiles,0)
-      console.log(result);
+      // console.log(result);
     }
   }
 

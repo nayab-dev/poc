@@ -342,7 +342,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = poc/poc.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QKU2732482;
+				DEVELOPMENT_TEAM = ZV67374735;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -361,8 +361,8 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nay.poc;
-				PRODUCT_NAME = "poc";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nayab.poc;
+				PRODUCT_NAME = poc;
 				SWIFT_OBJC_BRIDGING_HEADER = "poc/poc-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -379,7 +379,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = poc/poc.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QKU2732482;
+				DEVELOPMENT_TEAM = ZV67374735;
 				INFOPLIST_FILE = poc/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -393,8 +393,8 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nay.poc;
-				PRODUCT_NAME = "poc";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nayab.poc;
+				PRODUCT_NAME = poc;
 				SWIFT_OBJC_BRIDGING_HEADER = "poc/poc-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

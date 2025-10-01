@@ -3,9 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import { insertRecords, readRecords } from 'react-native-health-connect';
 
+type resultType = {
+  volume: { inLiters: number } | null;
+  startTime: string;
+  metadata: { id: string };
+};
 const Hydration = () => {
   const [volume, setVolume] = useState('');
-  const [volumeData, setVolumeData] = useState([]);
+  const [volumeData, setVolumeData] = useState<resultType[]>([]);
 
   const addHydrationRecord = async () => {
     try {
@@ -25,7 +30,7 @@ const Hydration = () => {
       setVolume('');
       getVolumeData();
     } catch (error) {
-      console.log("Error while adding hydration data", error);
+      // console.log("Error while adding hydration data", error);
     }
   };
 
@@ -34,10 +39,10 @@ const Hydration = () => {
       const { records } = await readRecords("Hydration", {
         timeRangeFilter: { startTime: start, endTime: end, operator: "between" }
       });
-      console.log(records)
-      setVolumeData(records);
+      // console.log(records)
+      setVolumeData(records as resultType[]);
     } catch (error) {
-      console.log("Error fetching hydration data", error);
+      // console.log("Error fetching hydration data", error);
     }
   };
 

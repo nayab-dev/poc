@@ -2,18 +2,26 @@ import { end, start } from '@/constants/time';
 import React, { useEffect, useState } from 'react';
 import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import { insertRecords, MealType, readRecords } from 'react-native-health-connect';
+type resultType = { 
 
+  protein: { inGrams: number } | null;
+  totalFat: { inGrams: number } | null; 
+  totalCarbohydrate: { inGrams: number } | null;
+  mealType: string | null;
+  startTime: string;
+  metadata: { id: string };
+}
 const Nutrition = () => {
   const [protein, setProtein] = useState('');
   const [fat, setFat] = useState('');
   const [carbs, setCarbs] = useState('');
-  const [nutritionData, setNutritionData] = useState([]);
+  const [nutritionData, setNutritionData] = useState<resultType[]>([]);
 
   const addNutritionRecord = async () => {
     try {
       if (!protein || !fat || !carbs) return;
     const now = new Date()
-      const startTime = new Date(now.getTime() - 1000 * 60 * 30).toISOString() // 30 min ago
+      const startTime = new Date(now.getTime() - 1000 * 60 * 5).toISOString() // 30 min ago
       const endTime = now.toISOString()
      const result= await insertRecords([
         {
@@ -26,13 +34,13 @@ const Nutrition = () => {
           mealType: MealType.LUNCH
         }
       ]);
-console.log("added",result)
+// console.log("added",result)
       setProtein('');
       setFat('');
       setCarbs('');
      await getNutritionData();
     } catch (error) {
-      console.log("Error while adding nutrition data", error);
+      // console.log("Error while adding nutrition data", error);
     }
   };
 
@@ -41,11 +49,11 @@ console.log("added",result)
       const { records } = await readRecords("Nutrition", {
         timeRangeFilter: { startTime: start, endTime: end, operator: "between" }
       });
-      console.log(records);
+      // console.log(records);
       
-      setNutritionData(records);
+      setNutritionData(records as resultType[]);
     } catch (error) {
-      console.log("Error fetching nutrition data", error);
+      // console.log("Error fetching nutrition data", error);
     }
   };
 
